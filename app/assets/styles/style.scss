@@ -1,0 +1,23 @@
+$font-stack:    Helvetica, sans-serif;
+$primary-color: #333;
+
+body {
+  font: 100% $font-stack;
+  color: $primary-color;
+  background-color: white
+}
+
+ .menu {
+  padding: 8px 0px;
+  width: 250px;
+  height: 100%;
+  display: table-cell;
+  vertical-align: top;
+  position: absolute
+}
+
+.content {
+  height: 100%;
+  display: table-cell;
+  vertical-align: top;
+}

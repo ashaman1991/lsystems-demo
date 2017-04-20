@@ -1,0 +1,70 @@
+{
+  "extends": "airbnb",
+  "parserOptions": {
+    "ecmaVersion": 6,
+    "sourceType": "module",
+    "ecmaFeatures": {
+      "jsx": true,
+      "impliedStrict": false
+    }
+  },
+  "globals": {
+    "document": true,
+    "window": true,
+    "localStorage": true,
+    "fetch": true,
+    "ENV": true,
+    "FormData": true,
+    "confirm": true
+  },
+  "env": {
+    "es6": true
+  },
+  "rules": {
+    "comma-dangle": [
+      2,
+      "never"
+    ],
+    "arrow-body-style": [
+      "error",
+      "always"
+    ],
+    "arrow-parens": "off",
+    "no-underscore-dangle": 0,
+    "no-param-reassign": 0,
+    "no-empty": 1,
+    "newline-per-chained-call": [
+      "error",
+      {
+        "ignoreChainWithDepth": 2
+      }
+    ],
+    "max-len": [
+      2,
+      150
+    ],
+    "radix": 0,
+    "no-multiple-empty-lines": [
+      "error",
+      {
+        "max": 1
+      }
+    ],
+    "no-plusplus": 0,
+    "new-cap": 1,
+    "jsx-a11y/anchor-has-content": 0,
+    "jsx-a11y/no-static-element-interactions": 0,
+    "react/jsx-filename-extension": 0,
+    "react/jsx-closing-bracket-location": 0,
+    "react/forbid-prop-types": 0,
+    "import/no-extraneous-dependencies": [
+      "error",
+      {
+        "devDependencies": true,
+        "optionalDependencies": false,
+        "peerDependencies": false
+      }
+    ],
+    "linebreak-style": "off"
+  }
+}
