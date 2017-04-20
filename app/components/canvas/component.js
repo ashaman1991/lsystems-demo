@@ -27,9 +27,10 @@ class Canvas extends React.Component {
     let start = { x: 0, y: 0 };
     const stage = this.stage;
     stage.removeChildren();
-    const system = new LSystem(LSystem.types.SERPINSKY_CURVE);
+    const system = new LSystem(LSystem.types.KOCH_CURVE);
     const str = system.applyRuleset(this.state.ticks);
     const path = system.getPoints(start, str);
+    start = path[path.length - 1];
     // eslint-disable-next-line
     (function myLoop(i) {
       setTimeout(() => {
@@ -42,7 +43,7 @@ class Canvas extends React.Component {
         start = { x, y };
         if (--i >= 0) myLoop(i);
       }, 60);
-    })(path.length - 1);
+    })(path.length - 2);
     this.animate();
   }
   animate() {

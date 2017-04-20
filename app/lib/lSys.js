@@ -28,5 +28,5 @@ LSystem.types = {
   SERPINSKY_CURVE: 'serpinskyCurve',
   DRAGON_CURVE: 'dragonCurve',
   CANTOR_SET: 'cantorSet',
-  COCH_CURVE: 'cochCurve'
+  KOCH_CURVE: 'kochCurve'
 };
