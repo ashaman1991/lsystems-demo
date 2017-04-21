@@ -1,15 +1,41 @@
-// import { reducer as reduxFormReducer } from 'redux-form';
 import { routerReducer } from 'react-router-redux';
 import { combineReducers } from 'redux';
+import * as types from '../constants';
+import { defaultOptions } from '../lib/lSys';
 
-import { reducer as home } from '../components/canvas';
+const initialCanvasState = {
+  height: 600,
+  width: 800
+};
 
-const initialState = {};
+const initialFractalState = {
+  type: 'serpinskyTriangle',
+  options: defaultOptions.any
+};
+const canvas = (state = initialCanvasState, action) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+const fractal = (state = initialFractalState, action) => {
+  switch (action.type) {
+    case types.CHANGE_TYPE:
+      return Object.assign({}, state, {
+        type: action.data,
+        options: defaultOptions[action.data] || defaultOptions.any
+      });
+
+    default:
+      return state;
+  }
+};
 
 export default combineReducers(
   {
-    home,
+    canvas,
+    fractal,
     routing: routerReducer
   },
-  initialState
+  {}
 );

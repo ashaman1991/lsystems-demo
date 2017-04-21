@@ -1,5 +1,6 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
+import PropTypes from 'prop-types';
 import LSystem from '../../lib/lSys';
 
 class Canvas extends React.Component {
@@ -13,21 +14,27 @@ class Canvas extends React.Component {
   }
 
   componentDidMount() {
-    this.renderer = PIXI.autoDetectRenderer(1366, 768);
+    const { width, height } = this.props;
+    this.renderer = PIXI.autoDetectRenderer({
+      width,
+      height,
+      transparent: true
+    });
     this.canvas.appendChild(this.renderer.view);
 
-    this.stage = new PIXI.Container();
-    this.stage.width = 1300; // TODO: get from props
-    this.stage.height = 768;
-
+    const stage = new PIXI.Container();
+    stage.width = width; // TODO: get from props
+    stage.height = height;
+    this.stage = stage;
     this.animate();
   }
 
   onClick() {
-    let start = { x: 0, y: 0 };
+    const options = this.props.options;
+    let start = options.start || { x: 0, y: 0 };
     const stage = this.stage;
     stage.removeChildren();
-    const system = new LSystem(LSystem.types.KOCH_CURVE);
+    const system = new LSystem(this.props.type);
     const str = system.applyRuleset(this.state.ticks);
     const path = system.getPoints(start, str);
     start = path[path.length - 1];
@@ -35,7 +42,7 @@ class Canvas extends React.Component {
     (function myLoop(i) {
       setTimeout(() => {
         const line = new PIXI.Graphics();
-        line.lineStyle(2, 0xffffff, 1);
+        line.lineStyle(2, options.color || 0x0000ff, 1);
         line.moveTo(start.x, start.y);
         const { x, y } = path[i];
         line.lineTo(x, y);
@@ -75,5 +82,12 @@ class Canvas extends React.Component {
     );
   }
 }
+
+Canvas.propTypes = {
+  height: PropTypes.number,
+  width: PropTypes.number,
+  type: PropTypes.string,
+  options: PropTypes.object
+};
 
 export default Canvas;

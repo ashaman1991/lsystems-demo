@@ -1,4 +1,3 @@
-/* eslint-disable */
 import presets from './presets';
 
 export default class LSystem {
@@ -8,7 +7,6 @@ export default class LSystem {
     this.ruleset = preset.ruleset;
     this.getPoints = preset.getPoints;
   }
-  getPoints() {}
   applyRuleset(iterations = 1) {
     let result = '';
     let start = this.axiom;
@@ -23,10 +21,21 @@ export default class LSystem {
   }
 }
 
-LSystem.types = {
+export const fractalTypes = {
   SERPINSKY_TRIANGLE: 'serpinskyTriangle',
   SERPINSKY_CURVE: 'serpinskyCurve',
   DRAGON_CURVE: 'dragonCurve',
   CANTOR_SET: 'cantorSet',
   KOCH_CURVE: 'kochCurve'
+};
+
+export const defaultOptions = {
+  any: {
+    start: { x: 0, y: 0 },
+    color: '0x000000'
+  },
+  [fractalTypes.DRAGON_CURVE]: {
+    start: { x: 200, y: 300 },
+    color: '0x000000'
+  }
 };
