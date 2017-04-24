@@ -1,6 +1,6 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
-import { RaisedButton, TextField } from 'material-ui';
+import { RaisedButton } from 'material-ui';
 import PropTypes from 'prop-types';
 import LSystem from '../../lib/lSys';
 
@@ -29,9 +29,9 @@ class Canvas extends React.Component {
     this.stage = stage;
     this.animate();
   }
-  componentWillReceiveProps(nextProps) {
-    this.setState({ ticks: nextProps.options.iterations });
-  }
+  // componentWillReceiveProps(nextProps) {
+  //   this.setState({ ticks: nextProps.options.iterations });
+  // }
 
   onClick() {
     const options = this.props.options;
@@ -39,7 +39,7 @@ class Canvas extends React.Component {
     const stage = this.stage;
     stage.removeChildren();
     const system = new LSystem(this.props.type);
-    const str = system.applyRuleset(this.state.ticks);
+    const str = system.applyRuleset(options.iterations);
     const path = system.getPoints(start, str);
     start = path[path.length - 1];
     // eslint-disable-next-line
@@ -74,14 +74,6 @@ class Canvas extends React.Component {
           }}
         />
         <br />
-        <TextField
-          name="iterations"
-          type="number"
-          value={this.state.ticks}
-          onChange={e => {
-            this.setState({ ticks: e.target.value });
-          }}
-        />
         <RaisedButton onClick={this.onClick}> Draw!</RaisedButton>
       </div>
     );

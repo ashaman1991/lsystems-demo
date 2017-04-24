@@ -14,11 +14,9 @@ import {
 } from 'material-ui/styles/colors';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { hashHistory, Router, Route, IndexRedirect } from 'react-router';
+import { hashHistory, Router, Route } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
 import Menu from './components/menu';
-import Canvas from './components/canvas';
-
 import reducer from './reducers';
 
 // Needed for onTouchTap
@@ -50,14 +48,7 @@ ReactDOM.render(
   <MuiThemeProvider muiTheme={theme}>
     <Provider store={store}>
       <Router history={history}>
-        <Route path="/" component={Menu}>
-          <IndexRedirect to="/home" />
-          <Route
-            path="/home"
-            name="home"
-            component={Canvas}
-          />
-        </Route>
+        <Route path="/" component={Menu} />
       </Router>
     </Provider>
   </MuiThemeProvider>,

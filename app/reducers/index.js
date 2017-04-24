@@ -8,6 +8,8 @@ const initialCanvasState = {
   width: 800
 };
 
+let options;
+
 const initialFractalState = {
   type: 'serpinskyTriangle',
   options: defaultOptions.any
@@ -25,7 +27,9 @@ const fractal = (state = initialFractalState, action) => {
         type: action.data,
         options: defaultOptions[action.data] || defaultOptions.any
       });
-
+    case types.CHANGE_OPTIONS:
+      options = Object.assign({}, state.options, action.data);
+      return Object.assign({}, state, { options });
     default:
       return state;
   }

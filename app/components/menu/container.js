@@ -5,8 +5,10 @@ const mapDispatchToProps = () => {
   return {};
 };
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = state => {
+  return {
+    type: state.fractal.type
+  };
 };
 
 const Menu = connect(mapStateToProps, mapDispatchToProps)(MenuComponent);

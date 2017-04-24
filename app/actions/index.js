@@ -7,3 +7,10 @@ export const changeType = type => {
     data: type
   };
 };
+
+export const changeOptions = options => {
+  return {
+    type: types.CHANGE_OPTIONS,
+    data: options
+  };
+};
