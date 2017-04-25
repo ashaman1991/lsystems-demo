@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { RaisedButton, TextField } from 'material-ui';
+import { TextField } from 'material-ui';
 import PropTypes from 'prop-types';
 import * as actions from '../../../actions';
 
@@ -34,7 +34,6 @@ class OptionsUpdate extends React.Component {
           value={iterations}
           onChange={this.onChange}
         />
-        <RaisedButton> Draw!</RaisedButton>
       </div>
     );
   }

@@ -1,6 +1,6 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
-import { RaisedButton } from 'material-ui';
+import { Paper } from 'material-ui';
 import PropTypes from 'prop-types';
 import LSystem from '../../lib/lSys';
 
@@ -12,9 +12,33 @@ class Canvas extends React.Component {
     };
     this.onClick = this.onClick.bind(this);
     this.animate = this.animate.bind(this);
+    this.renderImage = this.renderImage.bind(this);
+    this.initCanvas = this.initCanvas.bind(this);
   }
 
   componentDidMount() {
+    this.initCanvas();
+  }
+
+  componentWillUpdate(nextProps) {
+    if (
+      this.props.height !== nextProps.height ||
+      this.props.width !== nextProps.width
+    ) {
+      this.renderer.resize(nextProps.width, nextProps.height);
+    }
+    if (!this.props.shouldRender && nextProps.shouldRender) {
+      this.renderImage();
+    }
+  }
+
+  animate() {
+    // render the stage container
+    this.renderer.render(this.stage);
+    this.frame = requestAnimationFrame(this.animate); // eslint-disable-line
+  }
+
+  initCanvas() {
     const { width, height } = this.props;
     this.renderer = PIXI.autoDetectRenderer({
       width,
@@ -29,11 +53,8 @@ class Canvas extends React.Component {
     this.stage = stage;
     this.animate();
   }
-  // componentWillReceiveProps(nextProps) {
-  //   this.setState({ ticks: nextProps.options.iterations });
-  // }
 
-  onClick() {
+  renderImage() {
     const options = this.props.options;
     let start = options.start || { x: 0, y: 0 };
     const stage = this.stage;
@@ -53,19 +74,18 @@ class Canvas extends React.Component {
         stage.addChild(line);
         start = { x, y };
         if (--i >= 0) myLoop(i);
-      }, 60);
+      }, 30);
     })(path.length - 2);
     this.animate();
-  }
-  animate() {
-    // render the stage container
-    this.renderer.render(this.stage);
-    this.frame = requestAnimationFrame(this.animate); // eslint-disable-line
+    this.props.stopRender();
   }
 
+  onClick() {} // eslint-disable-line
+
   render() {
+    const { height, width } = this.props;
     return (
-      <div>
+      <Paper style={{ width, height }} zDepth={2}>
         <div
           className="canvas-container"
           id="canvas"
@@ -73,9 +93,7 @@ class Canvas extends React.Component {
             this.canvas = canvas;
           }}
         />
-        <br />
-        <RaisedButton onClick={this.onClick}> Draw!</RaisedButton>
-      </div>
+      </Paper>
     );
   }
 }
@@ -84,7 +102,9 @@ Canvas.propTypes = {
   height: PropTypes.number,
   width: PropTypes.number,
   type: PropTypes.string,
-  options: PropTypes.object
+  options: PropTypes.object,
+  shouldRender: PropTypes.bool,
+  stopRender: PropTypes.func
 };
 
 export default Canvas;

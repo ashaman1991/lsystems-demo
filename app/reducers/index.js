@@ -5,7 +5,8 @@ import { defaultOptions } from '../lib/lSys';
 
 const initialCanvasState = {
   height: 600,
-  width: 800
+  width: 800,
+  shouldRender: false
 };
 
 let options;
@@ -16,6 +17,10 @@ const initialFractalState = {
 };
 const canvas = (state = initialCanvasState, action) => {
   switch (action.type) {
+    case types.RESIZE:
+      return Object.assign({}, state, action.data);
+    case types.RENDER_STATE:
+      return Object.assign({}, state, { shouldRender: action.data });
     default:
       return state;
   }

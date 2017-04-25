@@ -3,6 +3,7 @@ import React from 'react';
 import AppBar from 'material-ui/AppBar';
 import PropTypes from 'prop-types';
 import Paper from 'material-ui/Paper';
+import RaisedButton from 'material-ui/RaisedButton';
 import ReactGridLayout, { WidthProvider } from 'react-grid-layout';
 import TypeSelect from '../forms/typeSelect';
 import Canvas from '../canvas';
@@ -25,31 +26,36 @@ function getOptionsForm(type) {
       return Options.any;
   }
 }
-
-const Menu = props => {
-  const OptForm = getOptionsForm(props.type);
-  return (
-    <div>
-      <GridLayout className="layout" rowHeight={65} layout={layout}>
-        <AppBar key="top-bar" title="Test" showMenuIconButton={false} />
-        <div key="menu">
-          <Paper zDepth={2}>
-            <TypeSelect />
-            <OptForm />
-          </Paper>
-        </div>
-        <div className="content" key="content-area">
-          <Paper zDepth={2}>
+class Menu extends React.PureComponent {
+  componentDidMount() {
+    window.addEventListener('resize', this.props.onResize);
+  }
+  render() {
+    const OptForm = getOptionsForm(this.props.type);
+    return (
+      <div>
+        <GridLayout className="layout" rowHeight={65} layout={layout}>
+          <AppBar key="top-bar" title="Test" showMenuIconButton={false} />
+          <div key="menu">
+            <Paper zDepth={2}>
+              <TypeSelect />
+              <OptForm />
+              <RaisedButton onClick={this.props.onClick}>Draw</RaisedButton>
+            </Paper>
+          </div>
+          <div className="content" key="content-area">
             <Canvas />
-          </Paper>
-        </div>
-      </GridLayout>
-    </div>
-  );
-};
+          </div>
+        </GridLayout>
+      </div>
+    );
+  }
+}
 
 Menu.propTypes = {
-  type: PropTypes.string
+  type: PropTypes.string,
+  onResize: PropTypes.func,
+  onClick: PropTypes.func
 };
 
 export default Menu;

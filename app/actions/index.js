@@ -14,3 +14,17 @@ export const changeOptions = options => {
     data: options
   };
 };
+
+export const resize = data => {
+  return {
+    type: types.RESIZE,
+    data
+  };
+};
+
+export const render = data => {
+  return {
+    type: types.RENDER_STATE,
+    data
+  };
+};
