@@ -11,9 +11,9 @@ class Canvas extends React.Component {
       ticks: 5
     };
     this.onClick = this.onClick.bind(this);
-    this.animate = this.animate.bind(this);
     this.renderImage = this.renderImage.bind(this);
     this.initCanvas = this.initCanvas.bind(this);
+    this.clear = this.clear.bind(this);
   }
 
   componentDidMount() {
@@ -27,15 +27,22 @@ class Canvas extends React.Component {
     ) {
       this.renderer.resize(nextProps.width, nextProps.height);
     }
+    // false --> true
     if (!this.props.shouldRender && nextProps.shouldRender) {
       this.renderImage();
     }
+    // true --> false
+    if (this.props.shouldRender && !nextProps.shouldRender) {
+      cancelAnimationFrame(this.frame); // eslint-disable-line
+    }
+    if (this.props.type !== nextProps.type) {
+      this.props.stopRender();
+      this.clear();
+    }
   }
 
-  animate() {
-    // render the stage container
-    this.renderer.render(this.stage);
-    this.frame = requestAnimationFrame(this.animate); // eslint-disable-line
+  onClick() {
+    this.props.stopRender();
   }
 
   initCanvas() {
@@ -48,24 +55,28 @@ class Canvas extends React.Component {
     this.canvas.appendChild(this.renderer.view);
 
     const stage = new PIXI.Container();
-    stage.width = width; // TODO: get from props
+    stage.width = width;
     stage.height = height;
     this.stage = stage;
-    this.animate();
+  }
+
+  clear() {
+    this.stage.removeChildren();
+    this.renderer.render(this.stage);
   }
 
   renderImage() {
+    this.clear();
     const options = this.props.options;
     let start = options.start || { x: 0, y: 0 };
     const stage = this.stage;
-    stage.removeChildren();
     const system = new LSystem(this.props.type);
     const str = system.applyRuleset(options.iterations);
     const path = system.getPoints(start, str);
     start = path[path.length - 1];
-    // eslint-disable-next-line
-    (function myLoop(i) {
-      setTimeout(() => {
+    let i = path.length - 2;
+    const loop = () => {
+      if (--i >= 0) {
         const line = new PIXI.Graphics();
         line.lineStyle(2, options.color || 0x0000ff, 1);
         line.moveTo(start.x, start.y);
@@ -73,27 +84,29 @@ class Canvas extends React.Component {
         line.lineTo(x, y);
         stage.addChild(line);
         start = { x, y };
-        if (--i >= 0) myLoop(i);
-      }, 30);
-    })(path.length - 2);
-    this.animate();
-    this.props.stopRender();
+        this.renderer.render(this.stage);
+        this.frame = requestAnimationFrame(loop); // eslint-disable-line
+      } else {
+        this.props.stopRender();
+      }
+    };
+    loop();
   }
-
-  onClick() {} // eslint-disable-line
 
   render() {
     const { height, width } = this.props;
     return (
-      <Paper style={{ width, height }} zDepth={2}>
-        <div
-          className="canvas-container"
-          id="canvas"
-          ref={canvas => {
-            this.canvas = canvas;
-          }}
-        />
-      </Paper>
+      <div>
+        <Paper style={{ width, height }} zDepth={2}>
+          <div
+            className="canvas-container"
+            id="canvas"
+            ref={canvas => {
+              this.canvas = canvas;
+            }}
+          />
+        </Paper>
+      </div>
     );
   }
 }
