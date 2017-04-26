@@ -4,7 +4,7 @@ import { Paper } from 'material-ui';
 import PropTypes from 'prop-types';
 import LSystem from '../../lib/lSys';
 
-class Canvas extends React.Component {
+class Canvas extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {
@@ -75,10 +75,11 @@ class Canvas extends React.Component {
     const path = system.getPoints(start, str);
     start = path[path.length - 1];
     let i = path.length - 2;
+    const color = options.color.replace('#', '0x');
     const loop = () => {
       if (--i >= 0) {
         const line = new PIXI.Graphics();
-        line.lineStyle(2, options.color || 0x0000ff, 1);
+        line.lineStyle(2, color);
         line.moveTo(start.x, start.y);
         const { x, y } = path[i];
         line.lineTo(x, y);

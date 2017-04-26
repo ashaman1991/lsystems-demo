@@ -32,17 +32,17 @@ export const fractalTypes = {
 export const defaultOptions = {
   any: {
     start: { x: 0, y: 0 },
-    color: '0x000000',
+    color: '#000000',
     iterations: 5
   },
   [fractalTypes.DRAGON_CURVE]: {
     start: { x: 600, y: 300 },
-    color: '0x000000',
+    color: '#000000',
     iterations: 10
   },
   [fractalTypes.KOCH_CURVE]: {
     start: { x: 0, y: 0 },
-    color: '0x000000',
+    color: '#000000',
     iterations: 3
   }
 };

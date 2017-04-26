@@ -14,13 +14,17 @@ const mapDispatchToProps = dispatch => {
     },
     onClick: () => {
       dispatch(actions.render(true));
+    },
+    onColorChange: value => {
+      dispatch(actions.changeOptions({ color: value.hex }));
     }
   };
 };
 
 const mapStateToProps = state => {
   return {
-    type: state.fractal.type
+    type: state.fractal.type,
+    color: state.fractal.options.color
   };
 };
 

@@ -4,9 +4,6 @@ import { TextField } from 'material-ui';
 import PropTypes from 'prop-types';
 import * as actions from '../../../actions';
 
-// import { SelectField, MenuItem } from 'material-ui';
-// import { map } from 'lodash';
-
 class OptionsUpdate extends React.Component {
   constructor(props) {
     super(props);

@@ -15,6 +15,7 @@ const initialFractalState = {
   type: 'serpinskyTriangle',
   options: defaultOptions.any
 };
+
 const canvas = (state = initialCanvasState, action) => {
   switch (action.type) {
     case types.RESIZE:
