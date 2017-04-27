@@ -22,8 +22,8 @@ export default class LSystem {
 }
 
 export const fractalTypes = {
-  SERPINSKY_TRIANGLE: 'serpinskyTriangle',
-  SERPINSKY_CURVE: 'serpinskyCurve',
+  SERPINSKY_TRIANGLE: 'serpinskiTriangle',
+  SERPINSKY_CURVE: 'serpinskiCurve',
   DRAGON_CURVE: 'dragonCurve',
   CANTOR_SET: 'cantorSet',
   KOCH_CURVE: 'kochCurve'
@@ -32,17 +32,17 @@ export const fractalTypes = {
 export const defaultOptions = {
   any: {
     start: { x: 0, y: 0 },
-    color: '#000000',
+    lineColor: '#000000',
     iterations: 5
   },
   [fractalTypes.DRAGON_CURVE]: {
     start: { x: 600, y: 300 },
-    color: '#000000',
+    lineColor: '#000000',
     iterations: 10
   },
   [fractalTypes.KOCH_CURVE]: {
     start: { x: 0, y: 0 },
-    color: '#000000',
+    lineColor: '#000000',
     iterations: 3
   }
 };

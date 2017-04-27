@@ -1,6 +1,6 @@
 import Turtle from './turtle';
 
-function serpinskyCurve(char) {
+function serpinskiCurve(char) {
   switch (char) {
     case 'A':
       return '+B-A-B+';
@@ -31,7 +31,7 @@ function kochCurve(char) {
   }
 }
 
-function serpinskyTriangle(char) {
+function serpinskiTriangle(char) {
   switch (char) {
     case 'F':
       return 'F-G+F+G-F';
@@ -54,8 +54,8 @@ function dragonCurve(char) {
 }
 
 export default {
-  serpinskyTriangle: {
-    ruleset: serpinskyTriangle,
+  serpinskiTriangle: {
+    ruleset: serpinskiTriangle,
     axiom: 'F-G-G',
     getPoints: (start, ruleString) => {
       const turtle = new Turtle(start || { x: 0, y: 0 });
@@ -150,8 +150,8 @@ export default {
     axiom: 'A',
     getPoints: () => {}
   },
-  serpinskyCurve: {
-    ruleset: serpinskyCurve,
+  serpinskiCurve: {
+    ruleset: serpinskiCurve,
     axiom: 'A',
     getPoints: (start, ruleString) => {
       const turtle = new Turtle(start || { x: 0, y: 0 });

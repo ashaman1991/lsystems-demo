@@ -18,7 +18,7 @@ const colorButtonStyle = {
 function getOptionsForm(type) {
   switch (type) {
     case fractalTypes.SERPINSKY_TRIANGLE:
-      return Options.serpinsky;
+      return Options.serpinski;
     default:
       return Options.any;
   }
@@ -33,12 +33,15 @@ class SideMenu extends React.PureComponent {
     };
     this.linePopoverToggle = this.linePopoverToggle.bind(this);
   }
+
   componentDidMount() {
     this.lineColorPopoverAnchor = ReactDOM.findDOMNode(this.lineColorButton); // eslint-disable-line
   }
+
   linePopoverToggle() {
     this.setState({ lineColorPopover: !this.state.lineColorPopover });
   }
+
   render() {
     const OptionsForm = getOptionsForm(this.props.type);
     return (
@@ -49,7 +52,7 @@ class SideMenu extends React.PureComponent {
             this.lineColorButton = lineColorButton;
           }}
           style={Object.assign({}, colorButtonStyle, {
-            backgroundColor: this.props.color
+            backgroundColor: this.props.lineColor
           })}
           onClick={this.linePopoverToggle}
         />
@@ -61,8 +64,8 @@ class SideMenu extends React.PureComponent {
           onRequestClose={this.linePopoverToggle}
         >
           <CompactPicker
-            color={this.props.color}
-            onChangeComplete={this.props.onColorChange}
+            lineColor={this.props.lineColor}
+            onChangeComplete={this.props.onLineColorChange}
           />
         </Popover>
         <OptionsForm />
@@ -80,8 +83,8 @@ class SideMenu extends React.PureComponent {
 SideMenu.propTypes = {
   type: PropTypes.string,
   onRenderButtonClick: PropTypes.func,
-  color: PropTypes.string,
-  onColorChange: PropTypes.func
+  lineColor: PropTypes.string,
+  onLineColorChange: PropTypes.func
 };
 
 export default SideMenu;

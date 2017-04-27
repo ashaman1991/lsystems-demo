@@ -75,11 +75,11 @@ class Canvas extends React.PureComponent {
     const path = system.getPoints(start, str);
     start = path[path.length - 1];
     let i = path.length - 2;
-    const color = options.color.replace('#', '0x');
+    const lineColor = options.lineColor.replace('#', '0x');
     const loop = () => {
       if (--i >= 0) {
         const line = new PIXI.Graphics();
-        line.lineStyle(2, color);
+        line.lineStyle(2, lineColor);
         line.moveTo(start.x, start.y);
         const { x, y } = path[i];
         line.lineTo(x, y);

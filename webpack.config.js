@@ -14,7 +14,7 @@ module.exports = {
   },
   plugins: [
     new HtmlWebpackPlugin({
-      title: 'Graphics',
+      title: 'React Demo',
       filename: 'index.html',
       template: 'app/index.ejs'
     })

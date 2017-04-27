@@ -41,7 +41,7 @@ class Main extends React.PureComponent {
     return (
       <div>
         <GridLayout className="layout" rowHeight={65} layout={layout}>
-          <AppBar key="top-bar" title="Test" showMenuIconButton={false} />
+          <AppBar key="top-bar" title=" Demo React app (Redux, PIXI.js)" showMenuIconButton={false} />
           <div key="menu">
             <SideMenu />
           </div>

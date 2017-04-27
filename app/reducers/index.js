@@ -12,7 +12,7 @@ const initialCanvasState = {
 };
 
 const initialFractalState = {
-  type: 'serpinskyTriangle',
+  type: 'serpinskiTriangle',
   options: defaultOptions.any
 };
 

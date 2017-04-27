@@ -4,7 +4,7 @@ import { TextField } from 'material-ui';
 import PropTypes from 'prop-types';
 import * as actions from '../../../actions';
 
-class OptionsUpdate extends React.Component {
+class OptionsUpdate extends React.PureComponent {
   constructor(props) {
     super(props);
     this.state = {};
