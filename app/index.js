@@ -16,7 +16,7 @@ import {
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import { hashHistory, Router, Route } from 'react-router';
 import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
-import Menu from './components/menu';
+import Main from './components/main';
 import reducer from './reducers';
 
 // Needed for onTouchTap
@@ -48,7 +48,7 @@ ReactDOM.render(
   <MuiThemeProvider muiTheme={theme}>
     <Provider store={store}>
       <Router history={history}>
-        <Route path="/" component={Menu} />
+        <Route path="/" component={Main} />
       </Router>
     </Provider>
   </MuiThemeProvider>,

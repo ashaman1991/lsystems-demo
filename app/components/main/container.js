@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import MenuComponent from './component';
+import MainComponent from './component';
 import * as actions from '../../actions';
 
 const mapDispatchToProps = dispatch => {
@@ -28,6 +28,6 @@ const mapStateToProps = state => {
   };
 };
 
-const Menu = connect(mapStateToProps, mapDispatchToProps)(MenuComponent);
+const Main = connect(mapStateToProps, mapDispatchToProps)(MainComponent);
 
-export default Menu;
+export default Main;

@@ -3,13 +3,13 @@ import { combineReducers } from 'redux';
 import * as types from '../constants';
 import { defaultOptions } from '../lib/lSys';
 
+let options;
+
 const initialCanvasState = {
   height: 600,
   width: 800,
   shouldRender: false
 };
-
-let options;
 
 const initialFractalState = {
   type: 'serpinskyTriangle',
@@ -26,6 +26,7 @@ const canvas = (state = initialCanvasState, action) => {
       return state;
   }
 };
+
 const fractal = (state = initialFractalState, action) => {
   switch (action.type) {
     case types.CHANGE_TYPE:
