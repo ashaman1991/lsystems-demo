@@ -33,12 +33,6 @@ export default class Turtle {
     if (this.angle < 0) this.angle += 360;
   }
 
-  set angle(angle) {
-    this.angle = angle;
-    this.angle = this.angle % 360;
-    if (this.angle < 0) this.angle += 360;
-  }
-
   get state() {
     return { position: this.position, angle: this.angle };
   }
