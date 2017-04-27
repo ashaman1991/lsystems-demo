@@ -53,26 +53,68 @@ function dragonCurve(char) {
   }
 }
 
+function plant(char) {
+  switch (char) {
+    case 'X':
+      return 'F-[[X]+X]+F[+FX]-X';
+    case 'F':
+      return 'FF';
+    default:
+      return char;
+  }
+}
+
 export default {
-  serpinskiTriangle: {
-    ruleset: serpinskiTriangle,
-    axiom: 'F-G-G',
-    getPoints: (start, ruleString) => {
+  plant: {
+    ruleset: plant,
+    axiom: 'X',
+    getLines(start) {
+      const ruleString = this.applyRuleset();
       const turtle = new Turtle(start || { x: 0, y: 0 });
-      const path = [];
-      const angle = 120;
+      const lines = [];
+      const valueStack = [];
+      const angle = 25;
       const length = 25;
-      let point;
-      path.push(start);
       for (let index = 0; index < ruleString.length; index++) {
         switch (ruleString[index]) {
           case 'F':
-            point = turtle.nextPoint(length);
-            path.push(point);
+            lines.push(turtle.nextLine(length));
+            break;
+          case '+':
+            turtle.turn(-angle);
+            break;
+          case '-':
+            turtle.turn(angle);
+            break;
+          case '[':
+            valueStack.push(turtle.state);
+            break;
+          case ']':
+            turtle.state = valueStack.pop();
+            break;
+          default:
+            break;
+        }
+      }
+      return lines;
+    }
+  },
+  serpinskiTriangle: {
+    ruleset: serpinskiTriangle,
+    axiom: 'F-G-G',
+    getLines(start) {
+      const ruleString = this.applyRuleset();
+      const turtle = new Turtle(start || { x: 0, y: 0 });
+      const lines = [];
+      const angle = 120;
+      const length = 25;
+      for (let index = 0; index < ruleString.length; index++) {
+        switch (ruleString[index]) {
+          case 'F':
+            lines.push(turtle.nextLine(length));
             break;
           case 'G':
-            point = turtle.nextPoint(length);
-            path.push(point);
+            lines.push(turtle.nextLine(length));
             break;
           case '+':
             turtle.turn(-angle);
@@ -84,24 +126,22 @@ export default {
             break;
         }
       }
-      return path;
+      return lines;
     }
   },
   dragonCurve: {
     ruleset: dragonCurve,
     axiom: 'FX',
-    getPoints: (start, ruleString) => {
+    getLines(start) {
+      const ruleString = this.applyRuleset();
       const turtle = new Turtle(start || { x: 0, y: 0 });
       const path = [];
       const angle = 90;
       const length = 25;
-      let point;
-      path.push(start);
       for (let index = 0; index < ruleString.length; index++) {
         switch (ruleString[index]) {
           case 'F':
-            point = turtle.nextPoint(length);
-            path.push(point);
+            path.push(turtle.nextLine(length));
             break;
           case '+':
             turtle.turn(angle);
@@ -119,18 +159,16 @@ export default {
   kochCurve: {
     ruleset: kochCurve,
     axiom: 'F',
-    getPoints: (start, ruleString) => {
+    getLines(start) {
+      const ruleString = this.applyRuleset();
       const turtle = new Turtle(start || { x: 0, y: 0 });
       const path = [];
       const angle = 90;
       const length = 25;
-      let point;
-      path.push(start);
       for (let index = 0; index < ruleString.length; index++) {
         switch (ruleString[index]) {
           case 'F':
-            point = turtle.nextPoint(length);
-            path.push(point);
+            path.push(turtle.nextLine(length));
             break;
           case '+':
             turtle.turn(angle);
@@ -153,22 +191,19 @@ export default {
   serpinskiCurve: {
     ruleset: serpinskiCurve,
     axiom: 'A',
-    getPoints: (start, ruleString) => {
+    getLines(start) {
+      const ruleString = this.applyRuleset();
       const turtle = new Turtle(start || { x: 0, y: 0 });
       const path = [];
       const angle = 60;
       const length = 25;
-      let point;
-      path.push(start);
       for (let index = 0; index < ruleString.length; index++) {
         switch (ruleString[index]) {
           case 'A':
-            point = turtle.nextPoint(length);
-            path.push(point);
+            path.push(turtle.nextLine(length));
             break;
           case 'B':
-            point = turtle.nextPoint(length);
-            path.push(point);
+            path.push(turtle.nextLine(length));
             break;
           case '+':
             turtle.turn(angle);

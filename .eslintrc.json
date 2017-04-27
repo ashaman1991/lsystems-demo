@@ -65,6 +65,7 @@
         "peerDependencies": false
       }
     ],
-    "linebreak-style": "off"
+    "linebreak-style": "off",
+    "no-mixed-operators": 0
   }
 }

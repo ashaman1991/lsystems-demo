@@ -4,6 +4,15 @@ import { Paper } from 'material-ui';
 import PropTypes from 'prop-types';
 import LSystem from '../../lib/lSys';
 
+function getDrawableLine(linePoints, lineColor) {
+  const { start, end } = linePoints;
+  const line = new PIXI.Graphics();
+  line.lineStyle(2, lineColor);
+  line.moveTo(start.x, start.y);
+  line.lineTo(end.x, end.y);
+  return line;
+}
+
 class Canvas extends React.PureComponent {
   constructor(props) {
     super(props);
@@ -68,23 +77,16 @@ class Canvas extends React.PureComponent {
   renderImage() {
     this.clear();
     const options = this.props.options;
-    let start = options.start || { x: 0, y: 0 };
+    const start = options.start || { x: 0, y: 0 };
     const stage = this.stage;
-    const system = new LSystem(this.props.type);
-    const str = system.applyRuleset(options.iterations);
-    const path = system.getPoints(start, str);
-    start = path[path.length - 1];
-    let i = path.length - 2;
+    const system = new LSystem(this.props.type, options.iterations);
     const lineColor = options.lineColor.replace('#', '0x');
+    const lines = system.getLines(start);
+    let i = 0;
     const loop = () => {
-      if (--i >= 0) {
-        const line = new PIXI.Graphics();
-        line.lineStyle(2, lineColor);
-        line.moveTo(start.x, start.y);
-        const { x, y } = path[i];
-        line.lineTo(x, y);
-        stage.addChild(line);
-        start = { x, y };
+      if (i < lines.length) {
+        stage.addChild(getDrawableLine(lines[i], lineColor));
+        i++;
         this.renderer.render(this.stage);
         this.frame = requestAnimationFrame(loop); // eslint-disable-line
       } else {
