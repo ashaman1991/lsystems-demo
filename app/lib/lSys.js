@@ -5,11 +5,12 @@ const empty = () => {
 };
 
 export default class LSystem {
-  constructor(type = '', iterations = 1, customPreset) {
+  constructor(type = '', iterations = 1, stepLength = 25, customPreset) {
     const preset = presets[type] || customPreset;
     this.axiom = preset.axiom;
-    this.ruleset = preset.ruleset;
+    this.stepLength = stepLength;
     this.iterations = iterations;
+    this.ruleset = preset.ruleset;
     this.getPoints = preset.getPoints || empty;
     this.getLines = preset.getLines || empty;
   }
@@ -27,34 +28,4 @@ export default class LSystem {
   }
 }
 
-export const fractalTypes = {
-  SERPINSKY_TRIANGLE: 'serpinskiTriangle',
-  SERPINSKY_CURVE: 'serpinskiCurve',
-  DRAGON_CURVE: 'dragonCurve',
-  // CANTOR_SET: 'cantorSet',
-  KOCH_CURVE: 'kochCurve',
-  PLANT: 'plant'
-};
-
-export const defaultOptions = {
-  any: {
-    start: { x: 0, y: 0 },
-    lineColor: '#000000',
-    iterations: 5
-  },
-  [fractalTypes.DRAGON_CURVE]: {
-    start: { x: 600, y: 300 },
-    lineColor: '#000000',
-    iterations: 10
-  },
-  [fractalTypes.KOCH_CURVE]: {
-    start: { x: 0, y: 0 },
-    lineColor: '#000000',
-    iterations: 3
-  },
-  [fractalTypes.PLANT]: {
-    start: { x: 0, y: 200 },
-    lineColor: '#000000',
-    iterations: 4
-  }
-};
+export { fractalTypes } from './presets';

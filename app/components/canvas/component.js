@@ -16,9 +16,6 @@ function getDrawableLine(linePoints, lineColor) {
 class Canvas extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.state = {
-      ticks: 5
-    };
     this.onClick = this.onClick.bind(this);
     this.renderImage = this.renderImage.bind(this);
     this.initCanvas = this.initCanvas.bind(this);
@@ -79,7 +76,7 @@ class Canvas extends React.PureComponent {
     const options = this.props.options;
     const start = options.start || { x: 0, y: 0 };
     const stage = this.stage;
-    const system = new LSystem(this.props.type, options.iterations);
+    const system = new LSystem(this.props.type, options.iterations, options.stepLength);
     const lineColor = options.lineColor.replace('#', '0x');
     const lines = system.getLines(start);
     let i = 0;
@@ -100,7 +97,14 @@ class Canvas extends React.PureComponent {
     const { height, width } = this.props;
     return (
       <div>
-        <Paper style={{ width, height }} zDepth={2}>
+        <Paper
+          style={{
+            width,
+            height,
+            backgroundColor: this.props.options.backgroundColor
+          }}
+          zDepth={2}
+        >
           <div
             className="canvas-container"
             id="canvas"

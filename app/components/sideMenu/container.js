@@ -9,6 +9,12 @@ const mapDispatchToProps = dispatch => {
     },
     onLineColorChange: value => {
       dispatch(actions.changeOptions({ lineColor: value.hex }));
+    },
+    onBackgroundColorChange: value => {
+      dispatch(actions.changeOptions({ backgroundColor: value.hex }));
+    },
+    onStepChange: (e, value) => {
+      dispatch(actions.changeOptions({ stepLength: value }));
     }
   };
 };
@@ -16,7 +22,9 @@ const mapDispatchToProps = dispatch => {
 const mapStateToProps = state => {
   return {
     type: state.fractal.type,
-    lineColor: state.fractal.options.lineColor
+    lineColor: state.fractal.options.lineColor,
+    backgroundColor: state.fractal.options.backgroundColor,
+    stepLength: state.fractal.options.stepLength
   };
 };
 

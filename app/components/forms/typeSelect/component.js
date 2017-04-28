@@ -12,7 +12,7 @@ function getOptions() {
 
 const Select = props => {
   return (
-    <div style={{ padding: '10px' }}>
+    <div>
       <SelectField
         hintText="Fractal Type"
         value={props.value}

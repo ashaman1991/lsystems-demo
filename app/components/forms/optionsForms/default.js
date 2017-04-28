@@ -22,7 +22,7 @@ class OptionsUpdate extends React.PureComponent {
   render() {
     const { iterations } = this.props.options;
     return (
-      <div style={{ padding: '10px' }}>
+      <div>
         <TextField
           floatingLabelText="Default"
           hintText="Default"
