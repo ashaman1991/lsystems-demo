@@ -24,6 +24,8 @@ class OptionsUpdate extends React.PureComponent {
     return (
       <div>
         <TextField
+          floatingLabelText="Iterations"
+          hintText="Iterations"
           name="iterations"
           type="number"
           value={iterations}

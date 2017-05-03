@@ -1,7 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import { RaisedButton, Paper, Toggle, Slider } from 'material-ui';
+import { RaisedButton, Paper, Toggle } from 'material-ui';
+import Slider from '../forms/slider';
 import TypeSelect from '../forms/typeSelect';
 import * as Options from '../forms/optionsForms';
 import { fractalTypes } from '../../lib/lSys';
@@ -29,19 +30,18 @@ class SideMenu extends React.PureComponent {
         <TypeSelect />
         <Toggle label="Animate" />
         <Slider
-          step={5}
-          value={this.props.stepLength}
-          min={5}
-          max={50}
-          onChange={this.props.onStepChange}
+          onStepChange={this.props.onStepChange}
+          stepLength={this.props.stepLength}
         />
         <ColorPicker
           color={this.props.lineColor}
           onChange={this.props.onLineColorChange}
+          label="Line Color"
         />
         <ColorPicker
           color={this.props.backgroundColor}
           onChange={this.props.onBackgroundColorChange}
+          label="Background Color"
         />
         <OptionsForm />
         <RaisedButton onClick={this.props.onRenderButtonClick}>

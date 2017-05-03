@@ -4,6 +4,15 @@ import PropTypes from 'prop-types';
 import Popover from 'material-ui/Popover';
 import { CompactPicker } from 'react-color';
 
+const wrapperStyle = {
+  display: 'flex'
+};
+
+const labelStyle = {
+  width: '30%',
+  lineHeight: 2.6
+};
+
 const colorButtonStyle = {
   margin: '10px',
   width: '40px',
@@ -32,27 +41,30 @@ export default class Picker extends React.PureComponent {
 
   render() {
     return (
-      <div
-        ref={button => {
-          this.button = button;
-        }}
-        style={Object.assign({}, colorButtonStyle, {
-          backgroundColor: this.props.color
-        })}
-        onClick={this.toggleOpen}
-      >
-        <Popover
-          open={this.state.open}
-          anchorEl={this.anchorEl}
-          anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
-          targetOrigin={{ horizontal: 'left', vertical: 'top' }}
-          onRequestClose={this.toggleOpen}
+      <div style={wrapperStyle}>
+        <span style={labelStyle}>{this.props.label}</span>
+        <div
+          ref={button => {
+            this.button = button;
+          }}
+          style={Object.assign({}, colorButtonStyle, {
+            backgroundColor: this.props.color
+          })}
+          onClick={this.toggleOpen}
         >
-          <CompactPicker
-            color={this.props.color}
-            onChangeComplete={this.props.onChange}
-          />
-        </Popover>
+          <Popover
+            open={this.state.open}
+            anchorEl={this.anchorEl}
+            anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+            targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+            onRequestClose={this.toggleOpen}
+          >
+            <CompactPicker
+              color={this.props.color}
+              onChangeComplete={this.props.onChange}
+            />
+          </Popover>
+        </div>
       </div>
     );
   }
@@ -60,5 +72,6 @@ export default class Picker extends React.PureComponent {
 
 Picker.propTypes = {
   color: PropTypes.string,
-  onChange: PropTypes.func
+  onChange: PropTypes.func.isRequired,
+  label: PropTypes.string
 };
