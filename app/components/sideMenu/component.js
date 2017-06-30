@@ -28,7 +28,7 @@ class SideMenu extends React.PureComponent {
     return (
       <Paper zDepth={2} style={{ padding: '10px' }}>
         <TypeSelect />
-        <Toggle label="Animate" />
+        <Toggle label="Animate" toggled={this.props.animate} onToggle={this.props.onAnimateChange} />
         <Slider
           onStepChange={this.props.onStepChange}
           stepLength={this.props.stepLength}
@@ -60,7 +60,9 @@ SideMenu.propTypes = {
   onLineColorChange: PropTypes.func,
   onBackgroundColorChange: PropTypes.func,
   stepLength: PropTypes.number,
-  onStepChange: PropTypes.func
+  onStepChange: PropTypes.func,
+  onAnimateChange: PropTypes.func,
+  animate: PropTypes.bool
 };
 
 export default SideMenu;

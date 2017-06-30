@@ -15,6 +15,9 @@ const mapDispatchToProps = dispatch => {
     },
     onStepChange: (e, value) => {
       dispatch(actions.changeOptions({ stepLength: value }));
+    },
+    onAnimateChange: (e, toggleState) => {
+      dispatch(actions.changeOptions({ animate: toggleState }));
     }
   };
 };
@@ -24,7 +27,8 @@ const mapStateToProps = state => {
     type: state.fractal.type,
     lineColor: state.fractal.options.lineColor,
     backgroundColor: state.fractal.options.backgroundColor,
-    stepLength: state.fractal.options.stepLength
+    stepLength: state.fractal.options.stepLength,
+    animate: state.fractal.options.animate
   };
 };
 

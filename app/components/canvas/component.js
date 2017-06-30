@@ -1,7 +1,7 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
-import { Paper } from 'material-ui';
 import PropTypes from 'prop-types';
+import { Paper } from 'material-ui';
 import LSystem from '../../lib/lSys';
 
 function getDrawableLine(linePoints, lineColor) {
@@ -75,22 +75,36 @@ class Canvas extends React.PureComponent {
     this.clear();
     const options = this.props.options;
     const start = options.start || { x: 0, y: 0 };
+    const animate = options.animate;
     const stage = this.stage;
-    const system = new LSystem(this.props.type, options.iterations, options.stepLength);
+    const system = new LSystem(
+      this.props.type,
+      options.iterations,
+      options.stepLength
+    );
     const lineColor = options.lineColor.replace('#', '0x');
     const lines = system.getLines(start);
     let i = 0;
-    const loop = () => {
-      if (i < lines.length) {
-        stage.addChild(getDrawableLine(lines[i], lineColor));
-        i++;
-        this.renderer.render(this.stage);
-        this.frame = requestAnimationFrame(loop); // eslint-disable-line
-      } else {
-        this.props.stopRender();
-      }
-    };
-    loop();
+    if (animate) {
+      const loop = () => {
+        if (i < lines.length) {
+          stage.addChild(getDrawableLine(lines[i], lineColor));
+          i++;
+          this.renderer.render(this.stage);
+          this.frame = requestAnimationFrame(loop); // eslint-disable-line
+        } else {
+          this.props.stopRender();
+        }
+      };
+      loop();
+    } else {
+      const drawable = lines.map(line => {
+        return getDrawableLine(line, lineColor);
+      });
+      stage.addChild(...drawable);
+      this.renderer.render(this.stage);
+      this.props.stopRender();
+    }
   }
 
   render() {

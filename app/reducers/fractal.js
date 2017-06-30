@@ -7,6 +7,7 @@ const defaultOptions = {
     lineColor: '#000000',
     iterations: 5,
     stepLength: 25,
+    animate: true,
     backgroundColor: '#ffffff'
   }
 };
