@@ -1,7 +1,8 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
 import PropTypes from 'prop-types';
-import { Paper } from 'material-ui';
+import { Paper, RaisedButton } from 'material-ui';
+import download from 'downloadjs';
 import LSystem from '../../lib/lSys';
 
 function getDrawableLine(linePoints, lineColor) {
@@ -48,7 +49,8 @@ class Canvas extends React.PureComponent {
   }
 
   onClick() {
-    this.props.stopRender();
+    const image = this.renderer.extract.canvas().toDataURL();
+    download(image, 'fractal.png', 'image/png');
   }
 
   initCanvas() {
@@ -56,7 +58,9 @@ class Canvas extends React.PureComponent {
     this.renderer = PIXI.autoDetectRenderer({
       width,
       height,
-      transparent: true
+      transparent: true,
+      preserveDrawingBuffer: true,
+      premultipliedAlpha: false
     });
     this.canvas.appendChild(this.renderer.view);
 
@@ -127,6 +131,7 @@ class Canvas extends React.PureComponent {
             }}
           />
         </Paper>
+        <RaisedButton label="Save image" onClick={this.onClick} />
       </div>
     );
   }
