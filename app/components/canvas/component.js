@@ -2,7 +2,7 @@ import React from 'react';
 import * as PIXI from 'pixi.js';
 import PropTypes from 'prop-types';
 import { Paper, RaisedButton } from 'material-ui';
-import download from 'downloadjs';
+import download from 'downloadjs'; // eslint-disable-line
 import LSystem from '../../lib/lSys';
 
 function getDrawableLine(linePoints, lineColor) {
@@ -49,19 +49,25 @@ class Canvas extends React.PureComponent {
   }
 
   onClick() {
-    const image = this.renderer.extract.canvas().toDataURL();
-    download(image, 'fractal.png', 'image/png');
+    if (this.renderer.context.canvas) {
+      const image = this.renderer.context.canvas.toDataURL();
+      download(image, 'fractal.png', 'image/png');
+    }
   }
 
   initCanvas() {
     const { width, height } = this.props;
-    this.renderer = PIXI.autoDetectRenderer({
+    this.renderer = new PIXI.CanvasRenderer(
       width,
       height,
-      transparent: true,
-      preserveDrawingBuffer: true,
-      premultipliedAlpha: false
-    });
+      {
+        transparent: true,
+        preserveDrawingBuffer: true,
+        premultipliedAlpha: false,
+        noWebGL: true
+      },
+      true
+    );
     this.canvas.appendChild(this.renderer.view);
 
     const stage = new PIXI.Container();
