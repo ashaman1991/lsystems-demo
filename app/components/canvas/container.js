@@ -1,11 +1,14 @@
 import { connect } from 'react-redux';
 import HomeComponent from './component';
-import * as actions from '../../actions';
+import actions from '../../actions';
 
 const mapDispatchToProps = dispatch => {
   return {
     stopRender: () => {
-      dispatch(actions.render(false));
+      dispatch(actions.control.render(false));
+    },
+    exportReset: () => {
+      dispatch(actions.control.exportImage(false));
     }
   };
 };
@@ -16,7 +19,8 @@ const mapStateToProps = state => {
     width: state.canvas.width,
     type: state.fractal.type,
     options: state.fractal.options,
-    shouldRender: state.canvas.shouldRender
+    shouldRender: state.control.shouldRender,
+    exportImage: state.control.imageExport
   };
 };
 

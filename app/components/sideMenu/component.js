@@ -8,6 +8,12 @@ import * as Options from '../forms/optionsForms';
 import { fractalTypes } from '../../lib/lSys';
 import ColorPicker from '../forms/colorPicker';
 
+const buttonStyle = {
+  style: {
+    margin: '10px'
+  }
+};
+
 function getOptionsForm(type) {
   switch (type) {
     case fractalTypes.SERPINSKY_TRIANGLE:
@@ -28,7 +34,11 @@ class SideMenu extends React.PureComponent {
     return (
       <Paper zDepth={2} style={{ padding: '10px' }}>
         <TypeSelect />
-        <Toggle label="Animate" toggled={this.props.animate} onToggle={this.props.onAnimateChange} />
+        <Toggle
+          label="Animate"
+          toggled={this.props.animate}
+          onToggle={this.props.onAnimateChange}
+        />
         <Slider
           onStepChange={this.props.onStepChange}
           stepLength={this.props.stepLength}
@@ -44,25 +54,42 @@ class SideMenu extends React.PureComponent {
           label="Background Color"
         />
         <OptionsForm />
-        <RaisedButton onClick={this.props.onRenderButtonClick}>
-          Draw
-        </RaisedButton>
+        <RaisedButton
+          {...buttonStyle}
+          primary
+          onClick={this.props.onRenderButtonClick}
+          label="Draw"
+        />
+        <RaisedButton
+          label="Save Image"
+          {...buttonStyle}
+          onClick={this.props.onSaveButtonClick}
+        />
+        <RaisedButton
+          secondary
+          disabled={!this.props.animate}
+          label="Cancel"
+          {...buttonStyle}
+          onClick={this.props.onCancelButtonClick}
+        />
       </Paper>
     );
   }
 }
 
 SideMenu.propTypes = {
+  animate: PropTypes.bool,
   type: PropTypes.string,
-  onRenderButtonClick: PropTypes.func,
   lineColor: PropTypes.string,
   backgroundColor: PropTypes.string,
+  stepLength: PropTypes.number,
+  onRenderButtonClick: PropTypes.func,
   onLineColorChange: PropTypes.func,
   onBackgroundColorChange: PropTypes.func,
-  stepLength: PropTypes.number,
   onStepChange: PropTypes.func,
   onAnimateChange: PropTypes.func,
-  animate: PropTypes.bool
+  onSaveButtonClick: PropTypes.func,
+  onCancelButtonClick: PropTypes.func
 };
 
 export default SideMenu;

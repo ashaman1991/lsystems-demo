@@ -2,7 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { TextField } from 'material-ui';
 import PropTypes from 'prop-types';
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 
 class OptionsUpdate extends React.PureComponent {
   constructor(props) {
@@ -44,7 +44,7 @@ OptionsUpdate.propTypes = {
 const mapDispatchToProps = dispatch => {
   return {
     onChange: options => {
-      dispatch(actions.changeOptions(options));
+      dispatch(actions.fractal.changeOptions(options));
     }
   };
 };

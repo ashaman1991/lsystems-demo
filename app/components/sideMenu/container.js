@@ -1,23 +1,29 @@
 import { connect } from 'react-redux';
 import SideMenuComponent from './component';
-import * as actions from '../../actions';
+import actions from '../../actions';
 
 const mapDispatchToProps = dispatch => {
   return {
     onRenderButtonClick: () => {
-      dispatch(actions.render(true));
+      dispatch(actions.control.render(true));
     },
     onLineColorChange: value => {
-      dispatch(actions.changeOptions({ lineColor: value.hex }));
+      dispatch(actions.fractal.changeOptions({ lineColor: value.hex }));
     },
     onBackgroundColorChange: value => {
-      dispatch(actions.changeOptions({ backgroundColor: value.hex }));
+      dispatch(actions.fractal.changeOptions({ backgroundColor: value.hex }));
     },
     onStepChange: (e, value) => {
-      dispatch(actions.changeOptions({ stepLength: value }));
+      dispatch(actions.fractal.changeOptions({ stepLength: value }));
     },
     onAnimateChange: (e, toggleState) => {
-      dispatch(actions.changeOptions({ animate: toggleState }));
+      dispatch(actions.fractal.changeOptions({ animate: toggleState }));
+    },
+    onSaveButtonClick: () => {
+      dispatch(actions.control.exportImage(true));
+    },
+    onCancelButtonClick: () => {
+      dispatch(actions.control.render(false));
     }
   };
 };

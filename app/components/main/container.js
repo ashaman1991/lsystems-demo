@@ -1,22 +1,22 @@
 import { connect } from 'react-redux';
 import MainComponent from './component';
-import * as actions from '../../actions';
+import actions from '../../actions';
 
 const mapDispatchToProps = dispatch => {
   return {
     onResize(e) {
       dispatch(
-        actions.resize({
+        actions.fractal.resize({
           width: e.target.innerWidth * 0.7,
           height: e.target.innerHeight * 0.8 // TODO: tweak these
         })
       );
     },
     onClick: () => {
-      dispatch(actions.render(true));
+      dispatch(actions.control.render(true));
     },
     onColorChange: value => {
-      dispatch(actions.changeOptions({ lineColor: value.hex }));
+      dispatch(actions.fractal.changeOptions({ lineColor: value.hex }));
     }
   };
 };

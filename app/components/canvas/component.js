@@ -1,7 +1,7 @@
 import React from 'react';
 import * as PIXI from 'pixi.js';
 import PropTypes from 'prop-types';
-import { Paper, RaisedButton } from 'material-ui';
+import { Paper } from 'material-ui';
 import download from 'downloadjs'; // eslint-disable-line
 import LSystem from '../../lib/lSys';
 
@@ -17,7 +17,7 @@ function getDrawableLine(linePoints, lineColor) {
 class Canvas extends React.PureComponent {
   constructor(props) {
     super(props);
-    this.onClick = this.onClick.bind(this);
+    this.exportImage = this.exportImage.bind(this);
     this.renderImage = this.renderImage.bind(this);
     this.initCanvas = this.initCanvas.bind(this);
     this.clear = this.clear.bind(this);
@@ -46,10 +46,16 @@ class Canvas extends React.PureComponent {
       this.props.stopRender();
       this.clear();
     }
+
+    // false --> true
+    if (!this.props.exportImage && nextProps.exportImage) {
+      this.exportImage();
+      this.props.exportReset();
+    }
   }
 
-  onClick() {
-    if (this.renderer.context.canvas) {
+  exportImage() {
+    if (this.renderer.context && this.renderer.context.canvas) {
       const image = this.renderer.context.canvas.toDataURL();
       download(image, 'fractal.png', 'image/png');
     }
@@ -137,7 +143,6 @@ class Canvas extends React.PureComponent {
             }}
           />
         </Paper>
-        <RaisedButton label="Save image" onClick={this.onClick} />
       </div>
     );
   }
@@ -149,7 +154,9 @@ Canvas.propTypes = {
   type: PropTypes.string,
   options: PropTypes.object,
   shouldRender: PropTypes.bool,
-  stopRender: PropTypes.func
+  stopRender: PropTypes.func,
+  exportImage: PropTypes.bool,
+  exportReset: PropTypes.func
 };
 
 export default Canvas;

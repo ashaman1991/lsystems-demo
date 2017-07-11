@@ -1,11 +1,11 @@
 import { connect } from 'react-redux';
 import SelectComponent from './component';
-import * as actions from '../../../actions';
+import actions from '../../../actions';
 
 const mapDispatchToProps = dispatch => {
   return {
     onChange: (event, _, value) => {
-      dispatch(actions.changeType(value));
+      dispatch(actions.fractal.changeType(value));
     }
   };
 };
