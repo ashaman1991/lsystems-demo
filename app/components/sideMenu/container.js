@@ -24,6 +24,9 @@ const mapDispatchToProps = dispatch => {
     },
     onCancelButtonClick: () => {
       dispatch(actions.control.render(false));
+    },
+    onTypeChange: (event, _, value) => {
+      dispatch(actions.fractal.changeType(value));
     }
   };
 };

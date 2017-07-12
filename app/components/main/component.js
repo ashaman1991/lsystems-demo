@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import PropTypes from 'prop-types';
-import AppBar from 'material-ui/AppBar';
 import ReactGridLayout, { WidthProvider } from 'react-grid-layout';
 import Canvas from '../canvas';
 import SideMenu from '../sideMenu';
@@ -9,9 +8,8 @@ import SideMenu from '../sideMenu';
 const GridLayout = WidthProvider(ReactGridLayout);
 
 const layout = [
-  { i: 'top-bar', x: 0, y: 0, w: 12, h: 1, static: true },
-  { i: 'menu', x: 0, y: 1, w: 3, h: 12, static: true },
-  { i: 'content-area', x: 3, y: 1, w: 9, h: 12, static: true }
+  { i: 'menu', x: 0, y: 0, w: 3, h: 11, static: true },
+  { i: 'content-area', x: 3, y: 0, w: 9, h: 11, static: true }
 ];
 
 class Main extends React.PureComponent {
@@ -41,7 +39,6 @@ class Main extends React.PureComponent {
     return (
       <div>
         <GridLayout className="layout" rowHeight={65} layout={layout}>
-          <AppBar key="top-bar" title=" Demo React app (Redux, PIXI.js)" showMenuIconButton={false} />
           <div key="menu">
             <SideMenu />
           </div>

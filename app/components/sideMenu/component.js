@@ -33,7 +33,10 @@ class SideMenu extends React.PureComponent {
     const OptionsForm = getOptionsForm(this.props.type);
     return (
       <Paper zDepth={2} style={{ padding: '10px' }}>
-        <TypeSelect />
+        <TypeSelect
+          value={this.props.type}
+          onChange={this.props.onTypeChange}
+        />
         <Toggle
           label="Animate"
           toggled={this.props.animate}
@@ -89,7 +92,8 @@ SideMenu.propTypes = {
   onStepChange: PropTypes.func,
   onAnimateChange: PropTypes.func,
   onSaveButtonClick: PropTypes.func,
-  onCancelButtonClick: PropTypes.func
+  onCancelButtonClick: PropTypes.func,
+  onTypeChange: PropTypes.func
 };
 
 export default SideMenu;

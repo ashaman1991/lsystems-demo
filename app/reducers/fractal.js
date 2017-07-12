@@ -2,46 +2,41 @@ import { fractalTypes } from '../lib/lSys';
 import * as types from '../constants';
 
 const defaultOptions = {
-  any: {
-    start: { x: 0, y: 0 },
+  common: {
     lineColor: '#000000',
-    iterations: 5,
     stepLength: 25,
     animate: true,
     backgroundColor: '#ffffff'
+  },
+  any: {
+    iterations: 5,
+    start: { x: 0, y: 0 }
+  },
+  [fractalTypes.DRAGON_CURVE]: {
+    start: { x: 600, y: 300 },
+    iterations: 10
+  },
+  [fractalTypes.KOCH_CURVE]: {
+    iterations: 3
+  },
+  [fractalTypes.PLANT]: {
+    start: { x: 0, y: 300 },
+    iterations: 4
+  },
+  [fractalTypes.TREE]: {
+    start: { x: 0, y: 300 },
+    iterations: 6
   }
 };
 
-defaultOptions[fractalTypes.DRAGON_CURVE] = Object.assign(
-  {},
-  defaultOptions.any,
-  {
-    start: { x: 600, y: 300 },
-    iterations: 10
-  }
-);
-
-defaultOptions[fractalTypes.KOCH_CURVE] = Object.assign(
-  {},
-  defaultOptions.any,
-  {
-    iterations: 3
-  }
-);
-
-defaultOptions[fractalTypes.PLANT] = Object.assign({}, defaultOptions.any, {
-  start: { x: 0, y: 300 },
-  iterations: 4
-});
-
-defaultOptions[fractalTypes.TREE] = Object.assign({}, defaultOptions.any, {
-  start: { x: 0, y: 300 },
-  iterations: 6
-});
-
 const initialFractalState = {
   type: fractalTypes.SERPINSKY_TRIANGLE,
-  options: defaultOptions.any
+  options: Object.assign(
+    {},
+    defaultOptions.common,
+    defaultOptions.any,
+    defaultOptions[fractalTypes.SERPINSKY_TRIANGLE]
+  )
 };
 
 let options;
@@ -49,9 +44,15 @@ let options;
 const fractal = (state = initialFractalState, action) => {
   switch (action.type) {
     case types.CHANGE_TYPE:
+      options = Object.assign(
+        {},
+        state.options,
+        defaultOptions.any,
+        defaultOptions[action.data]
+      );
       return Object.assign({}, state, {
         type: action.data,
-        options: defaultOptions[action.data] || defaultOptions.any
+        options
       });
     case types.CHANGE_OPTIONS:
       options = Object.assign({}, state.options, action.data);

@@ -1,3 +1,3 @@
-import Select from './container';
+import Select from './component';
 
 export default Select;

@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import injectTapEventPlugin from 'react-tap-event-plugin';
-import { hashHistory, Router, Route } from 'react-router';
+import { Router, Route, IndexRoute } from 'react-router';
 import { createStore, applyMiddleware, compose } from 'redux';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
-import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
+// import { syncHistoryWithStore, routerMiddleware } from 'react-router-redux';
 import lightBaseTheme from 'material-ui/styles/baseThemes/lightBaseTheme';
+import { createHistory } from 'history';
+import { routerMiddleware } from 'react-router-redux';
 
+import Menu from './components/Menu.component';
 import Main from './components/main';
+import Spirograph from './components/Spirograph.component';
 import reducer from './reducers';
 
 // Needed for onTouchTap
@@ -18,23 +22,29 @@ injectTapEventPlugin();
 require('font-awesome-webpack');
 require('./assets/styles/style.scss');
 
-const middleware = routerMiddleware(hashHistory);
+const history = createHistory();
+const middleware = routerMiddleware(history);
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; // TODO: don't use in prod environment
 const store = createStore(
   reducer,
   composeEnhancers(applyMiddleware(middleware))
 );
-const history = syncHistoryWithStore(hashHistory, store);
+
+// Build the middleware for intercepting and dispatching navigation actions
 
 const theme = getMuiTheme(lightBaseTheme);
 
 ReactDOM.render(
-  <MuiThemeProvider muiTheme={theme}>
-    <Provider store={store}>
+  <Provider store={store}>
+    <MuiThemeProvider muiTheme={theme}>
       <Router history={history}>
-        <Route path="/" component={Main} />
+        <Route path="/" component={Menu}>
+          <IndexRoute component={Spirograph} />
+          <Route path="/fractal" component={Main} />
+          <Route path="/spirograph" component={Spirograph} />
+        </Route>
       </Router>
-    </Provider>
-  </MuiThemeProvider>,
+    </MuiThemeProvider>
+  </Provider>,
   document.getElementById('content')
 );
