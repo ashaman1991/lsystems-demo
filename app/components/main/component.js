@@ -22,6 +22,10 @@ class Main extends React.PureComponent {
     this.linePopoverToggle = this.linePopoverToggle.bind(this);
   }
 
+  componentWillMount() {
+    this.props.onResize({ target: window });
+  }
+
   componentDidMount() {
     window.addEventListener('resize', this.props.onResize);
     this.lineColorPopoverAnchor = ReactDOM.findDOMNode(this.lineColorButton); // eslint-disable-line

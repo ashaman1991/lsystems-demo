@@ -2,6 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import PropTypes from 'prop-types';
 import FlatButton from 'material-ui/FlatButton';
+import muiThemeable from 'material-ui/styles/muiThemeable';
 import {
   Toolbar,
   ToolbarGroup,
@@ -9,7 +10,6 @@ import {
   ToolbarTitle
 } from 'material-ui/Toolbar';
 import ReactGridLayout, { WidthProvider } from 'react-grid-layout';
-// import Canvas from '../canvas';
 
 const GridLayout = WidthProvider(ReactGridLayout);
 
@@ -21,9 +21,18 @@ const layout = [
 const Menu = props => {
   return (
     <GridLayout className="layout" rowHeight={65} layout={layout}>
-      <Toolbar key="top-bar">
+      <Toolbar
+        key="top-bar"
+        style={{
+          backgroundColor: props.muiTheme.palette.primary1Color,
+          color: props.muiTheme.palette.textColor
+        }}
+      >
         <ToolbarGroup>
-          <ToolbarTitle text="Demo React app (Redux, PIXI.js)" />
+          <ToolbarTitle
+            style={{ color: props.muiTheme.palette.textColor }}
+            text="Demo React app (Redux, PIXI.js)"
+          />
         </ToolbarGroup>
         <ToolbarGroup>
           <FlatButton
@@ -36,6 +45,7 @@ const Menu = props => {
             containerElement={<Link to="/spirograph" />}
           />
         </ToolbarGroup>
+        <ToolbarGroup lastChild />
       </Toolbar>
       <div className="content" key="content-area">
         {props.children}
@@ -45,7 +55,8 @@ const Menu = props => {
 };
 
 Menu.propTypes = {
-  children: PropTypes.any
+  children: PropTypes.any,
+  muiTheme: PropTypes.object
 };
 
-export default Menu;
+export default muiThemeable()(Menu);
