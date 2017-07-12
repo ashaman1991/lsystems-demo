@@ -22,21 +22,32 @@ module.exports = {
     })
   ],
   module: {
-    preLoaders: [
-      { test: /\.js$/, loader: 'eslint-loader', exclude: /node_modules/ }
-    ],
-    loaders: [
+    rules: [
+      {
+        test: /\.js$/,
+        enforce: 'pre',
+        loader: 'eslint-loader',
+        exclude: /node_modules/
+      },
       {
         test: /\.(png|jpg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
         loader: 'file-loader'
       },
       {
         test: /\.(eot|woff|woff2|ttf|svg)$/,
-        loader: 'url-loader?limit=30000&name=[name]-[hash].[ext]'
+        loader: 'url-loader',
+        options: {
+          limit: 30000,
+          name: '[name]-[hash].[ext]'
+        }
       },
       {
         test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/,
-        loader: 'url-loader?limit=10000&minetype=application/font-woff'
+        loader: 'url-loader',
+        options: {
+          limit: 10000,
+          minetype: 'application/font-woff'
+        }
       },
       {
         test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/,
@@ -44,13 +55,17 @@ module.exports = {
       },
       {
         test: /\.scss|css$/,
-        loaders: ['style', 'css', 'sass']
+        use: [
+          { loader: 'style-loader' },
+          { loader: 'css-loader' },
+          { loader: 'sass-loader' }
+        ]
       },
       {
         test: /\.js$/,
         exclude: /(node_modules|bower_components|main.js)/,
-        loader: 'babel',
-        query: {
+        loader: 'babel-loader',
+        options: {
           presets: ['es2015', 'react']
         }
       }
